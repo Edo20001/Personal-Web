@@ -372,6 +372,51 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
 .toast .i { color: var(--sky); }
 .toast.warn .i { color: var(--amber); }
 
+/* ---------- Mood reactions ---------- */
+.chat { display: flex; gap: 12px; align-items: flex-start; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+.chat-av { width: 36px; height: 36px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 700; font-size: .8125rem; color: #7dd3fc; background: #0b1220; box-shadow: 0 0 0 2px var(--sky), 0 0 16px rgba(56,189,248,.35); }
+.chat-name { font-size: .6875rem; color: var(--muted); margin-bottom: 4px; letter-spacing: .04em; }
+.chat-col { display: grid; gap: 8px; min-width: 0; justify-items: start; flex: 1; }
+.bubble { max-width: 36rem; padding: 10px 14px; border-radius: 4px 18px 18px 18px; background: rgba(56,189,248,.12); border: 1px solid rgba(56,189,248,.28); font-size: .875rem; line-height: 1.6; animation: rise .25s ease both; overflow-wrap: anywhere; }
+.bubble strong { color: #fff; }
+.bubble ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 4px; color: var(--soft); }
+.bubble-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.bubble-btn { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 12px; border-radius: 12px; font-size: .75rem; font-weight: 500; color: var(--sky); background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.28); }
+.bubble-btn:hover { background: rgba(56,189,248,.2); }
+.bubble.typing { display: flex; gap: 4px; padding: 14px; }
+.bubble.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--sky); animation: dot 1s ease-in-out infinite; }
+.bubble.typing i:nth-child(2) { animation-delay: .15s; } .bubble.typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+
+.confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 45; }
+.fx-vignette { position: fixed; inset: 0; z-index: 35; pointer-events: none; opacity: 0; background: radial-gradient(ellipse at center, transparent 38%, rgba(2,6,23,.8) 100%); }
+.fx-vignette.play { animation: vig 5s ease-in-out both; }
+@keyframes vig { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { opacity: 0; } }
+.fx-banner { position: fixed; inset: 0; z-index: 46; display: grid; place-items: center; pointer-events: none; padding: 16px; text-align: center; }
+.fx-banner span { font-size: clamp(2.25rem, 9vw, 4.5rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.1; background: linear-gradient(90deg, #38bdf8, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0; filter: drop-shadow(0 6px 24px rgba(56,189,248,.45)); }
+.fx-banner.play span { animation: pop 3.2s ease both; }
+@keyframes pop { 0% { opacity: 0; transform: scale(.7); } 14% { opacity: 1; transform: scale(1.06); } 24% { transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-14px); } }
+
+.fx-cat { position: fixed; z-index: 44; left: 0; width: 140px; pointer-events: none; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 1024px) { .fx-cat { bottom: 36px; } }
+.fx-cat.play { animation: catrun 5s linear 2 both; }
+@keyframes catrun { from { transform: translateX(-340px); } to { transform: translateX(calc(100vw + 40px)); } }
+.cat { display: block; overflow: visible; animation: bob .3s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+.cat .leg { transform-box: fill-box; transform-origin: 50% 0; animation: legrun .3s linear infinite alternate; }
+.cat .leg.b { animation-direction: alternate-reverse; }
+@keyframes legrun { from { transform: rotate(-38deg); } to { transform: rotate(38deg); } }
+.cat .tail { transform-box: fill-box; transform-origin: 100% 100%; animation: wag .3s ease-in-out infinite alternate; }
+@keyframes wag { from { transform: rotate(-8deg); } to { transform: rotate(10deg); } }
+.cat-say { position: absolute; left: 24px; bottom: 100%; margin-bottom: 4px; white-space: nowrap; padding: 8px 14px; border-radius: 16px 16px 16px 4px; background: #fff; color: #0f172a; font-weight: 700; font-size: .9375rem; letter-spacing: .02em; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+
+.sos { display: grid; gap: 8px; justify-items: center; text-align: center; padding: 20px 22px; border-radius: 20px; border: 1px solid; }
+.sos.amber { background: rgba(251,191,36,.1); border-color: rgba(251,191,36,.45); }
+.sos.red { background: rgba(248,113,113,.12); border-color: rgba(248,113,113,.6); animation: sosPulse 1.4s ease-in-out infinite; }
+.sos b { font-size: clamp(1.25rem, 5vw, 1.875rem); letter-spacing: .02em; line-height: 1.2; color: var(--text); text-wrap: balance; }
+.sos p { font-size: .875rem; color: var(--soft); max-width: 30rem; }
+@keyframes sosPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,.4); } 50% { box-shadow: 0 0 0 12px rgba(248,113,113,0); } }
+
 /* ---------- Ayat ---------- */
 .verse { margin: 4px 0 0; padding: 14px 16px; border-radius: 16px; background: rgba(2,6,23,.4); border: 1px solid var(--line); max-width: 40rem; }
 .verse blockquote { margin: 0; font-size: .9375rem; line-height: 1.65; color: var(--text); font-weight: 300; font-style: italic; text-wrap: pretty; }
@@ -527,6 +572,10 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
           <span class="pill sky" id="moodBadge">Terpilih: Calm</span>
         </div>
         <div class="moods" id="moods" role="group" aria-label="Pilih mood"></div>
+        <div class="chat" id="moodChat" hidden aria-live="polite">
+          <div class="chat-av" aria-hidden="true">E</div>
+          <div style="min-width:0;flex:1"><div class="chat-name">Edo</div><div class="chat-col" id="chatCol"></div></div>
+        </div>
       </div>
 
       <div class="card" style="display:grid;gap:16px">
@@ -562,6 +611,10 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
 
     <!-- ===== Breathe ===== -->
     <section class="panel stack" id="tab-breathe" hidden aria-labelledby="breathe-h">
+      <div class="sos narrow" id="sos" hidden role="alert">
+        <b id="sosTitle"></b><p id="sosText"></p>
+        <a class="btn btn-primary" id="sosBtn" href="#" target="_blank" rel="noopener" hidden>Chat Edo</a>
+      </div>
       <div class="card glow narrow center" style="padding:clamp(24px,5vw,40px)">
         <h2 class="title-lg" id="breathe-h" style="font-size:1.5rem">Box Breathing 4-4-4-4</h2>
         <p class="sub" style="max-width:28rem;margin:8px auto 0">Teknik pernapasan untuk meredakan cemas, menyeimbangkan sistem saraf, dan menenangkan pikiran yang berputar.</p>
@@ -713,6 +766,28 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
   </main>
 </div>
 
+<div class="fx-vignette" id="fxVignette" hidden aria-hidden="true"></div>
+<div class="fx-banner" id="fxBanner" hidden aria-hidden="true"><span>Semangat ya!!</span></div>
+<div class="fx-cat" id="fxCat" hidden aria-hidden="true">
+  <div class="cat-say">SEMANGAT KERJANYA!!</div>
+  <svg class="cat" viewBox="0 0 140 90" width="140" height="90">
+    <path class="tail" d="M30 46 C8 46 4 24 16 16" fill="none" stroke="#fb923c" stroke-width="8" stroke-linecap="round"/>
+    <line class="leg b" x1="42" y1="56" x2="38" y2="78" stroke="#c2570c" stroke-width="7" stroke-linecap="round"/>
+    <line class="leg" x1="86" y1="56" x2="90" y2="78" stroke="#c2570c" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="64" cy="46" rx="36" ry="16" fill="#fb923c"/>
+    <path d="M50 32v10M62 30v12M74 31v11" stroke="#c2570c" stroke-width="4" stroke-linecap="round"/>
+    <line class="leg" x1="52" y1="56" x2="56" y2="78" stroke="#ea7a1a" stroke-width="7" stroke-linecap="round"/>
+    <line class="leg b" x1="76" y1="56" x2="72" y2="78" stroke="#ea7a1a" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="104" cy="34" r="15" fill="#fb923c"/>
+    <path d="M93 24 L95 8 L106 20z M108 20 L117 9 L118 27z" fill="#fb923c"/>
+    <path d="M96 12 L99 19 L95 20z M113 14 L114 21 L111 20z" fill="#f9a8d4"/>
+    <circle cx="110" cy="32" r="2.4" fill="#0f172a"/><circle cx="111" cy="31.2" r=".8" fill="#fff"/>
+    <path d="M117 36 l3 1.5 -3 1.5z" fill="#f472b6"/>
+    <path d="M114 40 q-4 3 -8 1 M118 38 l12 -3 M118 41 l12 2" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  </svg>
+</div>
+<canvas class="confetti" id="confetti" hidden aria-hidden="true"></canvas>
+
 <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 
 <script>
@@ -749,6 +824,7 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
       if (a.dataset.nav === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     $('#verseStrip').hidden = id === 'dashboard';
+    if (id !== 'breathe') $('#sos').hidden = true;
     window.scrollTo(0, 0);
     if (id !== 'breathe') Breath.stop();
   }
@@ -796,8 +872,81 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
     const b = e.target.closest('.mood'); if (!b) return;
     moodId = b.dataset.id; store.set('mood', moodId); renderMood();
     $('.mood[aria-pressed="true"]').focus();
-    if (moodId === 'anxious' || moodId === 'overwhelmed') toast('Coba Box Breathing atau Brain Dump untuk membantu menenangkan diri.');
+    react(moodId);
   });
+
+  /* ---------- Reaksi mood ---------- */
+  // Isi nomor WhatsApp Edo (format internasional tanpa +, contoh 6281234567890) agar tombol "Chat Edo" muncul.
+  const EDO_WHATSAPP = '';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let chatToken = 0, fxTimers = [];
+  const bubbleActions = (...links) => '<div class="bubble-actions">' + links.map(l => `<a class="bubble-btn" href="#${l[0]}">${l[1]}</a>`).join('') + '</div>';
+  function chatSay(lines) {
+    const box = $('#moodChat'), col = $('#chatCol'), tk = ++chatToken;
+    col.innerHTML = ''; box.hidden = !lines.length; if (!lines.length) return;
+    let delay = 0;
+    lines.forEach(html => {
+      const typing = document.createElement('div'); typing.className = 'bubble typing'; typing.innerHTML = '<i></i><i></i><i></i>';
+      setTimeout(() => { if (tk === chatToken) col.appendChild(typing); }, delay);
+      delay += reduceMotion ? 50 : 800;
+      setTimeout(() => { if (tk !== chatToken) return; const b = document.createElement('div'); b.className = 'bubble'; b.innerHTML = html; typing.replaceWith(b); }, delay);
+      delay += 200;
+    });
+  }
+  function confetti() {
+    if (reduceMotion) return;
+    const cv = $('#confetti'), ctx = cv.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; cv.hidden = false;
+    const colors = ['#38bdf8', '#a855f7', '#f97316', '#34d399', '#fbbf24', '#f472b6'];
+    const P = Array.from({ length: 150 }, (_, i) => { const side = i % 2; return {
+      x: side ? W * .88 : W * .12, y: H * .6, vx: (side ? -1 : 1) * (3 + Math.random() * 9), vy: -(10 + Math.random() * 11),
+      w: 6 + Math.random() * 6, h: 8 + Math.random() * 8, r: Math.random() * 6, vr: (Math.random() - .5) * .4, c: colors[i % colors.length] }; });
+    const t0 = performance.now();
+    (function frame(t) {
+      const el = t - t0; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      P.forEach(p => {
+        p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.max(0, 1 - Math.max(0, el - 2300) / 1100);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+      });
+      if (el < 3500) requestAnimationFrame(frame); else { ctx.clearRect(0, 0, W, H); cv.hidden = true; }
+    })(t0);
+  }
+  function play(sel, ms) {
+    const e = $(sel); e.hidden = false; e.classList.remove('play'); void e.offsetWidth; e.classList.add('play');
+    fxTimers.push(setTimeout(() => { e.hidden = true; e.classList.remove('play'); }, ms));
+  }
+  function showSos(kind, title, text) {
+    const box = $('#sos'); box.className = 'sos narrow ' + kind; box.hidden = false;
+    $('#sosTitle').textContent = title; $('#sosText').textContent = text;
+    const btn = $('#sosBtn'); btn.hidden = !(EDO_WHATSAPP && kind === 'red');
+    if (!btn.hidden) btn.href = 'https://wa.me/' + EDO_WHATSAPP + '?text=' + encodeURIComponent('Edo, aku lagi cemas. Bisa chat sekarang?');
+  }
+  function goBreathe() { location.hash = 'breathe'; setTimeout(() => Breath.start(), 350); }
+  function react(id) {
+    fxTimers.forEach(clearTimeout); fxTimers = [];
+    ['#fxVignette', '#fxBanner', '#fxCat', '#confetti'].forEach(s => { const e = $(s); e.hidden = true; e.classList.remove('play'); });
+    chatToken++; $('#sos').hidden = true;
+    if (id === 'calm') {
+      confetti();
+      chatSay([
+        '<strong>Nice banget, Love!</strong> Kamu lagi tenang hari ini dan itu layak dirayakan. Terima kasih sudah menjaga dirimu.',
+        'Biar tenangnya awet, coba ini:<ul><li>Minum air putih, lalu satu putaran napas 4-4-4-4.</li><li>Pilih satu agenda berikutnya saja, tidak perlu semuanya sekaligus.</li><li>Fokus 25 menit, istirahat 5 menit.</li></ul>' + bubbleActions(['timer', 'Mulai fokus'], ['tasks', 'Lihat jadwal'])
+      ]);
+    } else if (id === 'focused') {
+      play('#fxVignette', 5200); play('#fxBanner', 3300);
+      chatSay(['<strong>Semangat ya!!</strong> Kerjakan satu hal dulu sampai selesai, kamu pasti bisa.' + bubbleActions(['timer', 'Mulai fokus 25 menit'])]);
+    } else if (id === 'energetic') {
+      play('#fxCat', 10500);
+      chatSay(['Wah, lagi bersemangat! Pakai energinya untuk agenda terpenting hari ini.' + bubbleActions(['tasks', 'Lihat jadwal'])]);
+    } else if (id === 'overwhelmed') {
+      chatSay([]); showSos('amber', 'Pleasee demi Edo, latihan pernafasan dulu', 'Semua bisa menunggu beberapa menit. Ikuti lingkaran di bawah ini.'); goBreathe();
+    } else if (id === 'anxious') {
+      chatSay([]); showSos('red', 'CHAT EDO SEKARANG', 'Sambil latihan pernafasan: tarik 4, tahan 4, hembus 4, tahan 4. Kamu tidak sendirian.'); goBreathe();
+    } else {
+      chatSay(['Kamu sudah berjuang hari ini, Love. Istirahat 5 menit dulu ya.' + bubbleActions(['timer', 'Buka timer istirahat'])]);
+    }
+  }
 
   /* ---------- Ayat harian ---------- */
   const VERSES = [
@@ -869,7 +1018,7 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
     }
     $('#breathBtn').addEventListener('click', () => running ? stop() : start());
     $('#breathReset').addEventListener('click', reset);
-    return { stop };
+    return { stop, start };
   })();
 
   /* ---------- Grounding ---------- */
