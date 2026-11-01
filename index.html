@@ -417,6 +417,39 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
 .sos p { font-size: .875rem; color: var(--soft); max-width: 30rem; }
 @keyframes sosPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,.4); } 50% { box-shadow: 0 0 0 12px rgba(248,113,113,0); } }
 
+/* ---------- Status mingguan ---------- */
+.mlog { display: grid; gap: 14px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.mstat { display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: 18px; background: color-mix(in srgb, var(--c) 10%, rgba(2,6,23,.4)); border: 1px solid color-mix(in srgb, var(--c) 30%, transparent); }
+.mstat b { display: block; font-size: 1.0625rem; font-weight: 700; }
+.mstat p { font-size: .8125rem; color: var(--soft); }
+.mstat .face { animation: floaty 3s ease-in-out infinite alternate; }
+@keyframes floaty { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-4px) rotate(3deg); } }
+.mstat.empty { background: rgba(2,6,23,.35); border-color: var(--line); color: var(--muted); font-size: .8125rem; }
+.face { flex: none; display: block; }
+.mlog-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.mlog-day { display: grid; justify-items: center; align-content: start; gap: 6px; padding: 8px 2px; min-height: 76px; border-radius: 14px; background: rgba(2,6,23,.4); border: 1px solid var(--line); }
+.mlog-day.today { border-color: rgba(56,189,248,.5); }
+.mlog-day.future { opacity: .4; }
+.mlog-day small { font-size: .625rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.mlog-day div { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 36px; }
+.mlog-day i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+.mlog-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.mlog-list li { display: flex; align-items: center; gap: 10px; font-size: .8125rem; padding: 8px 12px; border-radius: 12px; background: rgba(2,6,23,.35); }
+.mlog-list li i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); flex: none; }
+.mlog-list li b { font-weight: 600; }
+.mlog-list li span { margin-left: auto; color: var(--muted); font-size: .75rem; font-variant-numeric: tabular-nums; text-align: right; }
+.mlog-sum { display: flex; flex-wrap: wrap; gap: 6px; }
+.hist { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 12px; }
+.hist .none { grid-column: 1 / -1; text-align: center; padding: 20px 8px; font-size: .8125rem; color: var(--muted); }
+.wk { display: grid; gap: 6px; justify-items: center; text-align: center; padding: 16px 10px 14px; border-radius: 20px; background: color-mix(in srgb, var(--c) 9%, rgba(15,23,42,.6)); border: 1px solid color-mix(in srgb, var(--c) 28%, transparent); transition: transform .2s; }
+.wk:hover { transform: translateY(-3px) rotate(-1deg); }
+.wk:hover .face { animation: wiggle .5s ease; }
+@keyframes wiggle { 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+.wk b { font-size: .875rem; font-weight: 700; }
+.wk small { color: var(--muted); font-size: .6875rem; font-variant-numeric: tabular-nums; }
+.wk-dots { display: flex; gap: 4px; margin-top: 2px; }
+.wk-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, rgba(255,255,255,.12)); }
+
 /* ---------- Ayat ---------- */
 .verse { margin: 4px 0 0; padding: 14px 16px; border-radius: 16px; background: rgba(2,6,23,.4); border: 1px solid var(--line); max-width: 40rem; }
 .verse blockquote { margin: 0; font-size: .9375rem; line-height: 1.65; color: var(--text); font-weight: 300; font-style: italic; text-wrap: pretty; }
@@ -575,6 +608,22 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
         <div class="chat" id="moodChat" hidden aria-live="polite">
           <div class="chat-av" aria-hidden="true">E</div>
           <div style="min-width:0;flex:1"><div class="chat-name">Edo</div><div class="chat-col" id="chatCol"></div></div>
+        </div>
+        <div class="mlog" id="mlog">
+          <div class="row between" style="align-items:flex-start">
+            <div><h3 class="title-md" style="font-size:.9375rem">Status minggu ini</h3><p class="sub num" id="mlogRange">–</p></div>
+            <span class="pill sky num" id="mlogCount">0 catatan</span>
+          </div>
+          <div id="mlogStatus"></div>
+          <div class="mlog-days" id="mlogDays"></div>
+          <div class="mlog-sum" id="mlogSum"></div>
+          <ul class="mlog-list" id="mlogList"></ul>
+          <p class="sub">Setiap hari Senin status mingguan mulai dari awal. Minggu sebelumnya tersimpan di riwayat.</p>
+          <div class="row" style="gap:8px">
+            <button class="btn btn-ghost btn-sm" id="histToggle" type="button" aria-expanded="false" aria-controls="mlogHist">Lihat riwayat mingguan</button>
+            <button class="btn btn-ghost btn-sm" id="mlogClear" type="button">Hapus semua</button>
+          </div>
+          <div class="hist" id="mlogHist" hidden></div>
         </div>
       </div>
 
@@ -872,7 +921,93 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
     const b = e.target.closest('.mood'); if (!b) return;
     moodId = b.dataset.id; store.set('mood', moodId); renderMood();
     $('.mood[aria-pressed="true"]').focus();
-    react(moodId);
+    addLog(moodId); renderLog(); react(moodId);
+  });
+
+  /* ---------- Status mingguan & riwayat ---------- */
+  let moodLog = store.get('moodlog', []); if (!Array.isArray(moodLog)) moodLog = [];
+  const DAY_MS = 864e5;
+  const fmtWhen = t => new Date(t).toLocaleString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).replace(/\./g, ':');
+  const addDays = (t, n) => { const d = new Date(t); d.setDate(d.getDate() + n); return d.getTime(); };
+  const weekStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getTime(); };
+  const rangeLabel = ws => {
+    const a = new Date(ws), b = new Date(addDays(ws, 6));
+    const f = (x, mon) => x.toLocaleDateString('id-ID', mon ? { day: 'numeric', month: 'short' } : { day: 'numeric' });
+    return a.getMonth() === b.getMonth() ? f(a) + ' – ' + f(b, true) : f(a, true) + ' – ' + f(b, true);
+  };
+  const WEEK_TITLE = { calm: 'Minggu Sejuk', focused: 'Minggu Laser', energetic: 'Minggu Meledak', overwhelmed: 'Minggu Badai', anxious: 'Minggu Deg-degan', tired: 'Minggu Rebahan' };
+  const WEEK_CAP = {
+    calm: 'Kamu paling sering tenang. Hebat sudah menjaga dirimu.',
+    focused: 'Kamu banyak fokus. Langkah kecilmu terkumpul.',
+    energetic: 'Penuh semangat! Pertahankan ritmenya.',
+    overwhelmed: 'Minggu yang berat. Terima kasih sudah bertahan.',
+    anxious: 'Banyak rasa cemas, tapi kamu berani menghadapinya.',
+    tired: 'Kamu lelah. Jangan lupa istirahat ya.'
+  };
+  const FACE = {
+    calm: '<path d="M11 18q3-3.5 6 0M23 18q3-3.5 6 0"/><path d="M15 25q5 5 10 0"/><ellipse cx="10" cy="24" rx="3" ry="2" fill="#fff" fill-opacity=".4" stroke="none"/><ellipse cx="30" cy="24" rx="3" ry="2" fill="#fff" fill-opacity=".4" stroke="none"/>',
+    focused: '<circle cx="14" cy="19" r="1.8" fill="#0f172a" stroke="none"/><circle cx="26" cy="19" r="1.8" fill="#0f172a" stroke="none"/><path d="M10 14l7 2M30 14l-7 2"/><path d="M16 27h8"/>',
+    energetic: '<path d="M11 17l4-3M29 17l-4-3"/><circle cx="14" cy="19" r="1.8" fill="#0f172a" stroke="none"/><circle cx="26" cy="19" r="1.8" fill="#0f172a" stroke="none"/><path d="M13 24q7 10 14 0z" fill="#0f172a"/><path d="M33 6v5M30.500 8.500h5" stroke="#fff"/>',
+    overwhelmed: '<circle cx="14" cy="18" r="1.8" fill="#0f172a" stroke="none"/><circle cx="26" cy="18" r="1.8" fill="#0f172a" stroke="none"/><path d="M12 27q2.5-3 5 0t5 0t5 0"/><path d="M32 9q3 4 0 6q-3-2 0-6z" fill="#fff" fill-opacity=".8" stroke="none"/>',
+    anxious: '<circle cx="14" cy="19" r="3.2"/><circle cx="26" cy="19" r="3.2"/><circle cx="14" cy="19" r="1" fill="#0f172a" stroke="none"/><circle cx="26" cy="19" r="1" fill="#0f172a" stroke="none"/><path d="M10 13l7-3M30 13l-7-3"/><path d="M15 27q2.5-2.500 5 0t5 0"/><path d="M32 8q3 4 0 6q-3-2 0-6z" fill="#fff" fill-opacity=".8" stroke="none"/>',
+    tired: '<path d="M11 19h6M23 19h6"/><path d="M17 27h6"/><path d="M29 7h5l-5 6h5" stroke="#fff"/>'
+  };
+  function face(id, size) {
+    const m = MOODS.find(x => x.id === id);
+    return `<svg class="face" viewBox="0 0 40 40" width="${size}" height="${size}" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="${m.color}"/><g fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${FACE[id]}</g></svg>`;
+  }
+  function addLog(id) {
+    const last = moodLog[moodLog.length - 1];
+    if (last && last.id === id && Date.now() - last.t < 60000) return;
+    moodLog.push({ t: Date.now(), id }); moodLog = moodLog.slice(-600); store.set('moodlog', moodLog);
+  }
+  function dominant(es) {
+    const c = {}, last = {};
+    es.slice().sort((a, b) => a.t - b.t).forEach(e => { c[e.id] = (c[e.id] || 0) + 1; last[e.id] = e.t; });
+    return Object.keys(c).sort((a, b) => c[b] - c[a] || last[b] - last[a])[0];
+  }
+  const dayDots = (es, ws, px) => Array.from({ length: 7 }, (_, k) => {
+    const t0 = addDays(ws, k), day = es.filter(e => e.t >= t0 && e.t < addDays(ws, k + 1));
+    return day.length ? MOODS.find(m => m.id === day[day.length - 1].id).color : null;
+  });
+  function renderLog() {
+    const ws0 = weekStart(Date.now()), weeks = new Map();
+    moodLog.forEach(e => { const w = weekStart(e.t); if (!weeks.has(w)) weeks.set(w, []); weeks.get(w).push(e); });
+    const es = (weeks.get(ws0) || []).slice().sort((a, b) => a.t - b.t);
+    $('#mlogRange').textContent = rangeLabel(ws0);
+    $('#mlogCount').textContent = es.length + ' catatan';
+    if (es.length) {
+      const dom = dominant(es), m = MOODS.find(x => x.id === dom);
+      $('#mlogStatus').innerHTML = `<div class="mstat" style="--c:${m.color}">${face(dom, 58)}<div><b>${WEEK_TITLE[dom]}</b><p>${WEEK_CAP[dom]}</p></div></div>`;
+    } else {
+      $('#mlogStatus').innerHTML = '<div class="mstat empty">Belum ada catatan minggu ini. Pilih mood di atas untuk memulai.</div>';
+    }
+    const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
+    $('#mlogDays').innerHTML = Array.from({ length: 7 }, (_, k) => {
+      const t0 = addDays(ws0, k), day = es.filter(e => e.t >= t0 && e.t < addDays(ws0, k + 1));
+      const cls = t0 === todayStart.getTime() ? ' today' : t0 > todayStart.getTime() ? ' future' : '';
+      return `<div class="mlog-day${cls}"><small>${SHORT[WEEK[k]]}</small><div>` + day.slice(-8).map(e => { const m = MOODS.find(x => x.id === e.id); return `<i style="--c:${m.color}" title="${m.name}, ${fmtWhen(e.t)}"></i>`; }).join('') + '</div></div>';
+    }).join('');
+    const cnt = {}; es.forEach(e => { cnt[e.id] = (cnt[e.id] || 0) + 1; });
+    $('#mlogSum').innerHTML = Object.entries(cnt).sort((a, b) => b[1] - a[1]).map(([k, v]) => { const m = MOODS.find(x => x.id === k); return `<span class="pill" style="color:${m.color};border-color:color-mix(in srgb, ${m.color} 35%, transparent);background:color-mix(in srgb, ${m.color} 10%, transparent)">${m.name} ${v}x</span>`; }).join('');
+    $('#mlogList').innerHTML = es.slice(-4).reverse().map(e => { const m = MOODS.find(x => x.id === e.id); return `<li style="--c:${m.color}"><i></i><b>${m.name}</b><span>${fmtWhen(e.t)}</span></li>`; }).join('');
+    const past = [...weeks.entries()].filter(([w]) => w < ws0).sort((a, b) => b[0] - a[0]).slice(0, 26);
+    $('#histToggle').textContent = ($('#histToggle').getAttribute('aria-expanded') === 'true' ? 'Sembunyikan riwayat' : 'Lihat riwayat mingguan') + (past.length ? ' (' + past.length + ')' : '');
+    $('#mlogHist').innerHTML = past.length ? past.map(([w, list]) => {
+      const dom = dominant(list), m = MOODS.find(x => x.id === dom), cols = dayDots(list, w);
+      return `<article class="wk" style="--c:${m.color}">${face(dom, 52)}<b>${WEEK_TITLE[dom]}</b><small>${rangeLabel(w)} · ${list.length} catatan</small><div class="wk-dots">${cols.map(c => `<i${c ? ` style="--c:${c}"` : ''}></i>`).join('')}</div></article>`;
+    }).join('') : '<p class="none">Belum ada minggu sebelumnya. Setiap Senin status mulai dari awal dan minggu yang lewat tersimpan di sini.</p>';
+    $('#mlogClear').disabled = !moodLog.length;
+  }
+  $('#histToggle').addEventListener('click', e => {
+    const b = e.currentTarget, open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open); $('#mlogHist').hidden = !open; renderLog();
+  });
+  let clearSure = false, clearTimer = null;
+  $('#mlogClear').addEventListener('click', e => {
+    const b = e.currentTarget;
+    if (!clearSure) { clearSure = true; b.textContent = 'Yakin hapus semua?'; clearTimer = setTimeout(() => { clearSure = false; b.textContent = 'Hapus semua'; }, 3000); return; }
+    clearTimeout(clearTimer); clearSure = false; b.textContent = 'Hapus semua'; moodLog = []; store.set('moodlog', moodLog); renderLog(); toast('Riwayat dihapus.');
   });
 
   /* ---------- Reaksi mood ---------- */
@@ -1353,7 +1488,7 @@ textarea.input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(56,1
   $('#modes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.mode); });
 
   /* ---------- Boot ---------- */
-  renderMood(); renderSchedule(); timerUI(); soundUI(); tickClock(); route();
-  setInterval(tickClock, 1000); setInterval(() => { renderToday(); renderCalendars(); }, 60000);
+  renderMood(); renderLog(); renderSchedule(); timerUI(); soundUI(); tickClock(); route();
+  setInterval(tickClock, 1000); setInterval(() => { renderToday(); renderCalendars(); renderLog(); }, 60000);
 })();
 </script>
